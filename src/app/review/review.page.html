@@ -1,0 +1,40 @@
+<ion-content class="ion-padding">
+
+  <ion-text color="secondary" class="ion-margin">
+    <h3 class="ion-text-center" style="font-weight: bold">Hope you are liking our app, please provide your review here.</h3>
+  </ion-text>
+
+  <form (submit)="onReviewSubmit(ratingComponent)" action="" [formGroup]="form" class="ion-margin">
+
+    <div class="ion-margin" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
+
+      <ionic-rating-component #ratingComponent
+                              activeIcon = "star"
+                              defaultIcon = "star-outline"
+                              halfIcon="star-half"
+                              activeColor = "#FFC409"
+                              defaultColor = "#F4F4F4"
+                              fontSize = "40px"
+                              halfStar="true"
+                              (ratingChanged)="changedRating(ratingComponent)"
+      >
+      </ionic-rating-component>
+
+      <ion-label style="font-weight: bold; font-size: 24px" color="primary">
+        {{ratingComponent.rating | number: '1.1'}}/5.0
+      </ion-label>
+
+    </div>
+
+    <ion-item class="ion-margin">
+      <ion-label position="floating">Your comment</ion-label>
+      <ion-textarea placeholder="Enter your comment here..." formControlName="comment" [required]="true"></ion-textarea>
+    </ion-item>
+
+    <ion-button color="primary" size="block" class="ion-margin" type="submit" [disabled]="form.invalid">
+      Submit
+    </ion-button>
+
+  </form>
+
+</ion-content>

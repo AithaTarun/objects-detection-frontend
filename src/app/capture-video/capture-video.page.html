@@ -1,0 +1,30 @@
+<ion-content class="ion-padding">
+
+  <ion-img src="assets/icon/aperture.png" style="width: 64px; height: 64px; margin-left: auto; margin-right: auto" (click)="openVideo()" class="ion-margin-vertical"></ion-img>
+
+  <div class="ion-margin ion-align-items-center" *ngIf="predictions.length === 0"
+       style="display: flex; flex-direction: column">
+    <ion-img src="assets/icon/no-data.png" style="width: 96px; height: 96px"></ion-img>
+    <ion-label color="danger" style="font-weight: bold">No Recent Predictions, Open camera to predict</ion-label>
+  </div>
+
+  <div class="ion-margin" *ngIf="predictions.length !== 0">
+
+    <ion-list>
+      <ion-list-header color="primary" class="ion-text-center" style="font-weight: bold">Recent Predictions</ion-list-header>
+
+      <ion-item *ngFor="let prediction of predictions">
+        <ion-avatar slot="start">
+          <ion-img [src]="'assets/icon/objects/' + prediction + '.png'"></ion-img>
+        </ion-avatar>
+
+        <ion-label>
+          <h2 style="font-weight: bold">{{prediction | titlecase}}</h2>
+        </ion-label>
+
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+</ion-content>

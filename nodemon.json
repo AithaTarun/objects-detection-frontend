@@ -1,0 +1,9 @@
+{
+  "env":
+  {
+    "FRONT_END_URL" : "http://localhost:8100",
+    "MONGO_DB_URL" : "mongodb://127.0.0.1:27017",
+    "RAPID_API_KEY": "77aca40997msh395218821887e25p109678jsn2a2d342cbf1a",
+    "JWT_KEY" : "secretKey"
+  }
+}

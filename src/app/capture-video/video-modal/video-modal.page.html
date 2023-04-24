@@ -1,0 +1,26 @@
+<ion-modal [isOpen]="true">
+  <ng-template>
+
+    <ion-content>
+
+      <div style="left: 0; right: 0; top: 0; bottom: 0; position: absolute">
+        <video #capture style="position: absolute"></video>
+        <canvas id="canvas" #canvas style="position: absolute"></canvas>
+      </div>
+
+      <ion-fab horizontal="start" vertical="top" slot="fixed">
+        <ion-fab-button color="light" (click)="flipCamera()">
+          <ion-img src="assets/icon/flip-camera.png" style="height: 30px; width: 30px"></ion-img>
+        </ion-fab-button>
+      </ion-fab>
+
+      <ion-fab horizontal="end" vertical="top" slot="fixed">
+        <ion-fab-button color="light" (click)="stopCamera()">
+          <ion-img src="assets/icon/close-camera.png" style="height: 30px; width: 30px"></ion-img>
+        </ion-fab-button>
+      </ion-fab>
+
+    </ion-content>
+
+  </ng-template>
+</ion-modal>

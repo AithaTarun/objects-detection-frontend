@@ -1,3 +1,45 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-header>
+    <app-header></app-header>
+  </ion-header>
+
+  <ion-content>
+
+    <ion-router-outlet></ion-router-outlet>
+
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+
+        <ion-tab-button tab="home">
+          <ion-img src="assets/icon/home.png" style="width: 32px; height: 32px"></ion-img>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="image-upload">
+          <ion-img src="assets/icon/upload.png" style="width: 32px; height: 32px"></ion-img>
+          <ion-label>Upload</ion-label>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+    </ion-tabs>
+
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed" class="ion-margin-bottom" [hidden]="isKeyboardOpen">
+      <ion-fab-button color="light" translucent="true">
+        <ion-img src="assets/icon/capture.png" style="width: 32px; height: 32px"></ion-img>
+      </ion-fab-button>
+
+      <ion-fab-list side="top">
+        <ion-fab-button (click)="navigate('image')">
+          <ion-img src="assets/icon/image.png" style="width: 32px; height: 32px; margin: 3px"></ion-img>
+        </ion-fab-button>
+
+        <ion-fab-button (click)="navigate('video')">
+          <ion-img src="assets/icon/video.png" style="width: 32px; height: 32px; margin: 3px"></ion-img>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
+  </ion-content>
+
 </ion-app>

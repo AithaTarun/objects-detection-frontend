@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title color="primary">SIGN-UP</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="closeSignUp()"><ion-img src="assets/icon/close.png" style="height: 24px; width: 24px"></ion-img></ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding"
+             style="--background: url(assets/backgrounds/signup.png) 0 0/100% 100% no-repeat">
+
+  <ion-img src="assets/icon/signup.png" style="margin-right: auto; margin-left: auto; width: 96px; height: 96px" class="ion-margin-vertical"></ion-img>
+
+  <form (submit)="onSignUp()" action="" [formGroup]="form" (change)="onFormChange()" class="ion-text-center">
+    <ion-list style="background-color: transparent">
+
+      <ion-item class="ion-margin" style="--ion-background-color:transparent">
+        <ion-label><ion-img class="ion-float-left" style="height: 32px; width: 32px" src="assets/icon/username.png"></ion-img></ion-label>
+        <ion-input type="text" placeholder="Username" formControlName="username" [clearInput]="true" [minlength]="5" [maxlength]="10" [required]="true"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin" style="--ion-background-color:transparent">
+        <ion-label><ion-img class="ion-float-left" style="height: 32px; width: 32px" src="assets/icon/password.png"></ion-img></ion-label>
+        <ion-input type="password" placeholder="Password" formControlName="password" [clearInput]="true" [minlength]="5" [maxlength]="10" [required]="true"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-label id="formMessage" [color]="messageColor" class="ion-margin" style="font-weight: bold" *ngIf="formMessage">{{formMessage}}</ion-label>
+
+    <ion-button color="primary" expand="block" class="ion-margin" (click)="onSignUp()" type="submit" shape="round">SIGN UP</ion-button>
+
+    <ion-label class="ion-margin">Already a user ? <a (click)="openSignIn()">SIGN IN</a></ion-label>
+  </form>
+
+</ion-content>

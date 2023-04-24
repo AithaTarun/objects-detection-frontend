@@ -1,0 +1,76 @@
+<ion-content class="ion-padding">
+  <ion-button expand="block" fill="outline" color="primary" (click)="onUploadClick(fileUpload)">
+    <ion-img src="assets/icon/image-upload.png" style="width: 32px; height: 32px" class="ion-margin-end"></ion-img>  Upload Image
+  </ion-button>
+
+  <input type="file" class="form-control" accept="image/*" (change)="onImageUploaded(fileUpload)" #fileUpload hidden>
+
+  <div class="ion-text-center">
+    <div style="position: relative; display: flex; justify-content: center; align-items: center">
+
+      <ion-img [src]="imageSRC || 'assets/icon/image-upload.png'"
+               class="ion-margin-top" style="z-index: 1"
+               #imagePreview
+               id="imagePreview"
+               [style.opacity]="isPredicting ? '30%' : '100%'"
+      >
+      </ion-img>
+
+      <canvas style="position: absolute; z-index: 99" #imageCanvas [hidden]="isPredicting"></canvas>
+
+      <ion-img src="assets/icon/loading.gif" alt="" style="width: 96px; height: 96px; z-index: 100; position: absolute"
+               *ngIf="isPredicting"></ion-img>
+
+    </div>
+  </div>
+
+  <ion-text color="danger" class="ion-text-center" *ngIf="!imageSRC">
+    <h4 style="font-weight: bold" class="ion-no-margin">
+      Upload Image To Predict Objects
+    </h4>
+  </ion-text>
+
+  <div class="ion-text-center ion-margin" *ngIf="predictions.length > 0 && imageSRC">
+
+    <ion-list class="ion-margin-top">
+      <ion-list-header color="primary" class="ion-text-center" style="font-weight: bold">Predictions</ion-list-header>
+
+      <ion-item *ngFor="let prediction of predictions">
+        <ion-avatar slot="start">
+          <ion-img [src]="'assets/icon/objects/' + prediction.class + '.png'"></ion-img>
+        </ion-avatar>
+
+        <ion-label>
+          <h2 style="font-weight: bold">{{prediction.class | titlecase}}</h2>
+          <h3>Accuracy : {{prediction.score | percent}}</h3>
+        </ion-label>
+
+      </ion-item>
+
+    </ion-list>
+
+  </div>
+
+  <div class="ion-text-center ion-margin" *ngIf="predictions.length === 0 && !isPredicting && imageSRC">
+    <ion-text color="danger" class="ion-text-center">
+      <h4 style="font-weight: bold" class="ion-no-margin">
+        No Predictions
+      </h4>
+    </ion-text>
+  </div>
+
+  <div class="ion-margin ion-text-center" *ngIf="authenticationService.getIsAuthenticated() && imageSRC && !isPredicting">
+    <ion-button color="primary" fill="outline" (click)="onCloudUpload()" [disabled]="isUploading">
+      <ion-img class="ion-margin-end" [src]="isUploading ? 'assets/icon/cloud-uploading.gif' : 'assets/icon/cloud-upload.png'"
+               style="width: 24px; height: 24px"></ion-img> Upload To Cloud
+    </ion-button>
+  </div>
+
+  <div class="ion-text-center ion-margin" *ngIf="!authenticationService.getIsAuthenticated() && imageSRC && !isPredicting">
+    <ion-img src="assets/icon/unauthenticated-cloud.png"
+             style="width: 96px; height: 96px; margin-right: auto; margin-left: auto">
+    </ion-img>
+    <ion-label color="danger" style="font-weight: bold">Authenticate to upload image predictions</ion-label>
+  </div>
+
+</ion-content>

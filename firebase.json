@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/objects-detection",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

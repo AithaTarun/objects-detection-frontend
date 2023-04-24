@@ -1,20 +1,108 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-fab vertical="top" horizontal="end" *ngIf="authenticationService.getIsAuthenticated()">
+    <ion-fab-button color="light" [routerLink]="['/review']">
+      <ion-img src="assets/icon/rating.png" style="width: 48px; height: 48px"></ion-img>
+    </ion-fab-button>
+  </ion-fab>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-card class="action-card">
+
+    <div class="ion-text-center ion-margin-bottom">
+      <div style="position: relative; display: flex; justify-content: center; align-items: center">
+        <ion-img class="header-img" src="/assets/backgrounds/card-background.jpg"></ion-img>
+
+        <ion-fab vertical="bottom" horizontal="center" slot="end" style="bottom: -12%">
+          <ion-fab-button color="light" translucent="true">
+            <ion-img src="assets/icon/favicon.png" style="width: 64px; height: 64px"></ion-img>
+          </ion-fab-button>
+        </ion-fab>
+
+      </div>
+    </div>
+
+    <ion-card-header class="ion-margin-top">
+      <ion-card-title color="primary" class="ion-text-center" style="font-weight: bold">
+        Welcome to Objects Detection
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="ion-text-center">
+      This project of ours will identify the objects in the surroundings through camera and object detection algorithms of machine learning. This will help people to identify the type of object and the distance of the object placed from the user.
+      This could also, be used to store the previously captured images and recordings along with the objects predicted data in the cloud with personal accounts.
+    </ion-card-content>
+  </ion-card>
+
+  <div class="ion-text-center ion-margin" *ngIf="!authenticationService.getIsAuthenticated()" >
+    <ion-img src="assets/icon/unauthenticated.png"
+             style="width: 96px; height: 96px; margin-right: auto; margin-left: auto">
+    </ion-img>
+    <ion-label color="danger" style="font-weight: bold">Authenticate to fetch your images</ion-label>
   </div>
+
+  <div class="" *ngIf="authenticationService.getIsAuthenticated()" style="display: flex; justify-content: center">
+
+    <ion-img class="ion-margin" src="assets/icon/fetching-predictions.gif" style="width: 64px; height: 64px" *ngIf="isFetching"></ion-img>
+
+    <div class="ion-text-center ion-margin" *ngIf="!isFetching && predictions.length === 0">
+      <ion-img src="assets/icon/empty-cloud.png" style="width: 128px; height: 128px; margin-right: auto; margin-left: auto"></ion-img>
+      <ion-label color="secondary" class="ion-margin-top" style="font-weight: bold">No predictions found on cloud</ion-label>
+    </div>
+
+    <div class="ion-text-center ion-margin" *ngIf="!isFetching && predictions.length !== 0" style="width: 100%">
+
+      <ion-list>
+
+        <ion-list-header color="primary" style="font-weight: bold" class="ion-text-center">Predictions</ion-list-header>
+
+        <ion-accordion-group>
+
+          <ion-item-sliding *ngFor="let prediction of predictions" #predictionsSliding>
+
+            <ion-accordion>
+
+              <ion-item slot="header">
+                <ion-avatar slot="start"><ion-img [src]="prediction.imageURL"></ion-img></ion-avatar>
+
+                <ion-badge color="primary" class="ion-margin-end">{{prediction.predictions.length}}</ion-badge>
+                <ion-label color="primary">Predictions</ion-label>
+              </ion-item>
+
+              <div slot="content">
+                <ion-img [src]="prediction.imageURL"></ion-img>
+
+                <ion-list class="ion-margin-top">
+                  <ion-item *ngFor="let pred of prediction.predictions">
+                    <ion-avatar slot="start">
+                      <ion-img [src]="'assets/icon/objects/' + pred.class + '.png'"></ion-img>
+                    </ion-avatar>
+
+                    <ion-label>
+                      <h2 style="font-weight: bold">{{pred.class | titlecase}}</h2>
+                      <h3>Accuracy : {{pred.score | percent}}</h3>
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+
+              </div>
+
+            </ion-accordion>
+
+            <ion-item-options side="start">
+              <ion-item-option color="light" (click)="deletePrediction(item, itemImage, prediction._id)" #item>
+                <ion-img src="/assets/icon/delete.png" style="width: 32px; height: 32px" #itemImage></ion-img >
+              </ion-item-option>
+            </ion-item-options>
+
+          </ion-item-sliding>
+
+        </ion-accordion-group>
+
+      </ion-list>
+
+    </div>
+
+  </div>
+
+
 </ion-content>

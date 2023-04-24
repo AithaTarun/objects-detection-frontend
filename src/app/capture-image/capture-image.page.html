@@ -1,0 +1,63 @@
+<ion-content class="ion-padding">
+
+  <div class="ion-justify-content-end" style="display: flex">
+    <ion-img src="assets/icon/camera.png" (click)="openCamera()" style="width: 32px; height: 32px"></ion-img>
+  </div>
+
+  <div class="ion-text-center">
+    <div style="position: relative; display: flex; justify-content: center; align-items: center">
+
+      <ion-img [src]="base64Image || 'assets/icon/image-capture.png'"
+               class="ion-margin-top" style="z-index: 1"
+               #imagePreview
+               id="imagePreview"
+               [style.opacity]="isPredicting ? '30%' : '100%'"
+               [style.width]="base64Image ? '' : '256px'"
+               [style.height]="base64Image ? '' : '256px'"
+      >
+      </ion-img>
+
+      <canvas style="position: absolute; z-index: 99" #imageCanvas [hidden]="isPredicting"></canvas>
+
+      <ion-img src="assets/icon/loading.gif" alt="" style="width: 96px; height: 96px; z-index: 100; position: absolute"
+               *ngIf="isPredicting"></ion-img>
+
+    </div>
+  </div>
+
+  <ion-text color="danger" class="ion-text-center" *ngIf="!base64Image">
+    <h4 style="font-weight: bold" class="ion-no-margin">
+      Capture Image Through Camera
+    </h4>
+  </ion-text>
+
+  <div class="ion-text-center ion-margin" *ngIf="predictions.length > 0 && base64Image">
+
+    <ion-list class="ion-margin-top">
+      <ion-list-header color="primary" class="ion-text-center" style="font-weight: bold">Predictions</ion-list-header>
+
+      <ion-item *ngFor="let prediction of predictions">
+        <ion-avatar slot="start">
+          <ion-img [src]="'assets/icon/objects/' + prediction.class + '.png'"></ion-img>
+        </ion-avatar>
+
+        <ion-label>
+          <h2 style="font-weight: bold">{{prediction.class | titlecase}}</h2>
+          <h3>Accuracy : {{prediction.score | percent}}</h3>
+        </ion-label>
+
+      </ion-item>
+
+    </ion-list>
+
+  </div>
+
+  <div class="ion-text-center ion-margin" *ngIf="predictions.length === 0 && !isPredicting && base64Image">
+    <ion-text color="danger" class="ion-text-center">
+      <h4 style="font-weight: bold" class="ion-no-margin">
+        No Predictions
+      </h4>
+    </ion-text>
+  </div>
+
+</ion-content>
